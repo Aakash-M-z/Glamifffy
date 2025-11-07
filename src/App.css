@@ -1,0 +1,14 @@
+.app {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000000;
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  width: 100%;
+  min-height: 100vh;
+  /* Add your content styles here */
+}
+
