@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './LoadingAnimation.css'
 
-const LoadingAnimation = () => {
+const LoadingAnimation = ({ onComplete }) => {
   const text = 'Glamiffy'
   const tagline = 'THE MODERN BLAZER'
   const [displayedText, setDisplayedText] = useState('')
@@ -20,12 +20,18 @@ const LoadingAnimation = () => {
         // Show tagline after a short delay
         setTimeout(() => {
           setShowTagline(true)
+          // Call onComplete after tagline animation
+          setTimeout(() => {
+            if (onComplete) {
+              onComplete()
+            }
+          }, 2000)
         }, 300)
       }
     }, 120) // Adjust speed here (lower = faster)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [onComplete])
 
   return (
     <div className="loading-container">

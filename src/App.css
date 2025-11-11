@@ -4,11 +4,52 @@
   background-color: #000000;
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
 .content {
   width: 100%;
   min-height: 100vh;
   /* Add your content styles here */
+}
+
+.fade-out {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: fadeOut 0.5s ease-out forwards;
+  z-index: 1;
+}
+
+.fade-in {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: fadeIn 0.5s ease-in forwards;
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
