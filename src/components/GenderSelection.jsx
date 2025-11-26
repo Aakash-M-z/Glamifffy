@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './GenderSelection.css'
 
 const GenderSelection = ({ onGenderSelect }) => {
   const [selectedGender, setSelectedGender] = useState(null)
   const [hoveredGender, setHoveredGender] = useState(null)
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
+  const [splashes, setSplashes] = useState([])
+  const [isHoveringButton, setIsHoveringButton] = useState(false)
+  const containerRef = useRef(null)
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 })
 
   const handleGenderSelect = (gender) => {
     setSelectedGender(gender)
@@ -13,8 +18,69 @@ const GenderSelection = ({ onGenderSelect }) => {
     console.log(`Selected: ${gender}`)
   }
 
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY })
+      
+      // Calculate mouse position as percentage for gradient effect
+      const rect = containerRef.current?.getBoundingClientRect()
+      if (rect) {
+        const x = ((e.clientX - rect.left) / rect.width) * 100
+        const y = ((e.clientY - rect.top) / rect.height) * 100
+        setMousePosition({ x, y })
+      }
+    }
+
+    const handleClick = (e) => {
+      const newSplash = {
+        id: Date.now(),
+        x: e.clientX,
+        y: e.clientY,
+      }
+      setSplashes((prev) => [...prev, newSplash])
+      
+      // Remove splash after animation
+      setTimeout(() => {
+        setSplashes((prev) => prev.filter((splash) => splash.id !== newSplash.id))
+      }, 1000)
+    }
+
+    const container = containerRef.current
+    if (container) {
+      container.addEventListener('mousemove', handleMouseMove)
+      container.addEventListener('click', handleClick)
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('mousemove', handleMouseMove)
+        container.removeEventListener('click', handleClick)
+      }
+    }
+  }, [])
+
   return (
-    <div className="gender-selection-container">
+    <div className="gender-selection-container" ref={containerRef}>
+      {/* Custom Cursor */}
+      <div 
+        className={`splash-cursor ${isHoveringButton ? 'hovered' : ''}`}
+        style={{
+          left: `${cursorPosition.x}px`,
+          top: `${cursorPosition.y}px`,
+        }}
+      />
+      
+      {/* Splash Effects */}
+      {splashes.map((splash) => (
+        <div
+          key={splash.id}
+          className="splash-effect"
+          style={{
+            left: `${splash.x}px`,
+            top: `${splash.y}px`,
+          }}
+        />
+      ))}
       <div className="background-video-container">
         <video
           className="background-video"
@@ -33,8 +99,14 @@ const GenderSelection = ({ onGenderSelect }) => {
           <button
             className={`gender-button male-button ${selectedGender === 'male' ? 'selected' : ''} ${hoveredGender === 'male' ? 'hovered' : ''}`}
             onClick={() => handleGenderSelect('male')}
-            onMouseEnter={() => setHoveredGender('male')}
-            onMouseLeave={() => setHoveredGender(null)}
+            onMouseEnter={() => {
+              setHoveredGender('male')
+              setIsHoveringButton(true)
+            }}
+            onMouseLeave={() => {
+              setHoveredGender(null)
+              setIsHoveringButton(false)
+            }}
           >
             <div className="button-icon">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,8 +122,14 @@ const GenderSelection = ({ onGenderSelect }) => {
           <button
             className={`gender-button female-button ${selectedGender === 'female' ? 'selected' : ''} ${hoveredGender === 'female' ? 'hovered' : ''}`}
             onClick={() => handleGenderSelect('female')}
-            onMouseEnter={() => setHoveredGender('female')}
-            onMouseLeave={() => setHoveredGender(null)}
+            onMouseEnter={() => {
+              setHoveredGender('female')
+              setIsHoveringButton(true)
+            }}
+            onMouseLeave={() => {
+              setHoveredGender(null)
+              setIsHoveringButton(false)
+            }}
           >
             <div className="button-icon">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,6 +144,38 @@ const GenderSelection = ({ onGenderSelect }) => {
         </div>
       </div>
       <div className="background-pattern"></div>
+      
+      {/* Animated Gradient Background Effect */}
+      <div className="animated-gradient-bg">
+        <div 
+          className="gradient-orb orb-1"
+          style={{
+            left: `${20 + (mousePosition.x - 50) * 0.3}%`,
+            top: `${20 + (mousePosition.y - 50) * 0.3}%`,
+          }}
+        ></div>
+        <div 
+          className="gradient-orb orb-2"
+          style={{
+            right: `${15 + (50 - mousePosition.x) * 0.2}%`,
+            top: `${60 + (50 - mousePosition.y) * 0.2}%`,
+          }}
+        ></div>
+        <div 
+          className="gradient-orb orb-3"
+          style={{
+            left: `${10 + (mousePosition.x - 50) * 0.25}%`,
+            bottom: `${20 + (50 - mousePosition.y) * 0.25}%`,
+          }}
+        ></div>
+        <div 
+          className="gradient-orb orb-4"
+          style={{
+            right: `${30 + (50 - mousePosition.x) * 0.3}%`,
+            top: `${50 + (mousePosition.y - 50) * 0.3}%`,
+          }}
+        ></div>
+      </div>
     </div>
   )
 }

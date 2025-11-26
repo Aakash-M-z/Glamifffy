@@ -11,6 +11,7 @@
   overflow: hidden;
   animation: fadeIn 1s ease-out;
   z-index: 10;
+  cursor: none; /* Hide default cursor */
 }
 
 .background-video-container {
@@ -51,12 +52,13 @@
   height: 100%;
   background: linear-gradient(
     135deg,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(0, 0, 0, 0.2) 50%,
-    rgba(0, 0, 0, 0.3) 100%
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.35) 50%,
+    rgba(0, 0, 0, 0.5) 100%
   );
   z-index: 1;
   pointer-events: none;
+  mix-blend-mode: multiply;
 }
 
 .background-pattern {
@@ -72,6 +74,131 @@
   animation: patternMove 20s ease-in-out infinite;
   pointer-events: none;
   z-index: 2;
+}
+
+/* Animated Gradient Background Effect */
+.animated-gradient-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1.5;
+  overflow: hidden;
+  background: transparent;
+  opacity: 0.9;
+}
+
+.gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.5;
+  mix-blend-mode: soft-light;
+  will-change: transform, opacity;
+  animation: orbPulse 5s ease-in-out infinite;
+}
+
+.orb-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.9) 0%, rgba(255, 193, 7, 0.5) 40%, rgba(255, 165, 0, 0.2) 60%, transparent 80%);
+  animation: orbFloat1 25s ease-in-out infinite;
+  transform: translate(-50%, -50%);
+}
+
+.orb-2 {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(255, 193, 7, 0.8) 0%, rgba(255, 215, 0, 0.4) 40%, rgba(255, 223, 0, 0.2) 60%, transparent 80%);
+  animation: orbFloat2 30s ease-in-out infinite;
+  transform: translate(50%, -50%);
+}
+
+.orb-3 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(184, 134, 11, 0.7) 0%, rgba(218, 165, 32, 0.4) 40%, rgba(255, 140, 0, 0.2) 60%, transparent 80%);
+  animation: orbFloat3 22s ease-in-out infinite;
+  transform: translate(-50%, 50%);
+}
+
+.orb-4 {
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(255, 223, 0, 0.75) 0%, rgba(255, 215, 0, 0.45) 40%, rgba(255, 193, 7, 0.25) 60%, transparent 80%);
+  animation: orbFloat4 28s ease-in-out infinite;
+  transform: translate(50%, -50%);
+}
+
+@keyframes orbFloat1 {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(-50%, -50%) scale(1.15) rotate(90deg);
+  }
+  66% {
+    transform: translate(-50%, -50%) scale(0.95) rotate(180deg);
+  }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% {
+    transform: translate(50%, -50%) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(50%, -50%) scale(1.2) rotate(-90deg);
+  }
+  66% {
+    transform: translate(50%, -50%) scale(0.9) rotate(-180deg);
+  }
+}
+
+@keyframes orbFloat3 {
+  0%, 100% {
+    transform: translate(-50%, 50%) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(-50%, 50%) scale(1.1) rotate(120deg);
+  }
+  66% {
+    transform: translate(-50%, 50%) scale(0.85) rotate(240deg);
+  }
+}
+
+@keyframes orbFloat4 {
+  0%, 100% {
+    transform: translate(50%, -50%) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(50%, -50%) scale(1.18) rotate(-120deg);
+  }
+  66% {
+    transform: translate(50%, -50%) scale(0.92) rotate(-240deg);
+  }
+}
+
+/* Smooth transition for mouse movement */
+.gradient-orb {
+  transition: left 1s cubic-bezier(0.4, 0, 0.2, 1),
+              top 1s cubic-bezier(0.4, 0, 0.2, 1),
+              right 1s cubic-bezier(0.4, 0, 0.2, 1),
+              bottom 1s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 1s ease,
+              filter 1s ease;
+}
+
+@keyframes orbPulse {
+  0%, 100% {
+    opacity: 0.4;
+    filter: blur(120px);
+  }
+  50% {
+    opacity: 0.6;
+    filter: blur(140px);
+  }
 }
 
 @keyframes patternMove {
@@ -510,5 +637,148 @@
     font-size: 1.5rem;
     letter-spacing: 0.15em;
   }
+}
+
+/* Splash Cursor Styles */
+.splash-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #FFD700;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  transition: width 0.2s ease, height 0.2s ease, border-width 0.2s ease;
+  box-shadow: 
+    0 0 10px rgba(255, 215, 0, 0.6),
+    0 0 20px rgba(255, 215, 0, 0.4),
+    inset 0 0 10px rgba(255, 215, 0, 0.2);
+  animation: cursorPulse 2s ease-in-out infinite;
+}
+
+.splash-cursor::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: #FFD700;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+}
+
+.splash-cursor.hovered {
+  width: 40px;
+  height: 40px;
+  border-width: 3px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.5) 0%, transparent 70%);
+}
+
+@keyframes cursorPulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 10px rgba(255, 215, 0, 0.6),
+      0 0 20px rgba(255, 215, 0, 0.4),
+      inset 0 0 10px rgba(255, 215, 0, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 0 15px rgba(255, 215, 0, 0.8),
+      0 0 30px rgba(255, 215, 0, 0.6),
+      inset 0 0 15px rgba(255, 215, 0, 0.3);
+  }
+}
+
+/* Splash Effect */
+.splash-effect {
+  position: fixed;
+  width: 0;
+  height: 0;
+  border: 3px solid #FFD700;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+  animation: splashExpand 1s ease-out forwards;
+}
+
+@keyframes splashExpand {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+    border-width: 3px;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+.splash-effect::before,
+.splash-effect::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 2px solid rgba(255, 215, 0, 0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.splash-effect::before {
+  width: 100px;
+  height: 100px;
+  animation: splashRing1 1s ease-out forwards;
+}
+
+.splash-effect::after {
+  width: 150px;
+  height: 150px;
+  animation: splashRing2 1s ease-out forwards;
+}
+
+@keyframes splashRing1 {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+  }
+}
+
+@keyframes splashRing2 {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.6;
+  }
+  100% {
+    width: 150px;
+    height: 150px;
+    opacity: 0;
+  }
+}
+
+/* Ensure buttons still have pointer cursor on hover */
+.gender-button {
+  cursor: none;
+}
+
+.gender-button:hover {
+  cursor: none;
 }
 
