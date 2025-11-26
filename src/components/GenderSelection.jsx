@@ -15,6 +15,18 @@ const GenderSelection = ({ onGenderSelect }) => {
 
   return (
     <div className="gender-selection-container">
+      <div className="background-video-container">
+        <video
+          className="background-video"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/background/back ground.mp4" type="video/mp4" />
+        </video>
+        <div className="video-overlay"></div>
+      </div>
       <div className="gender-selection-content">
         <h2 className="selection-title">Choose Your Style</h2>
         <div className="gender-buttons">
