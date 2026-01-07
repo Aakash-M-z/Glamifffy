@@ -108,17 +108,36 @@ const BlazerSection = ({ gender, onBack }) => {
               style={{ '--index': index }}
             >
               <div className="blazer-image-container">
-                <div className="image-loader">
-                  <div className="loader-spinner"></div>
+                <div className="flip-card">
+                  <div className="flip-face front-face">
+                    <div className="image-loader">
+                      <div className="loader-spinner"></div>
+                    </div>
+                    <img 
+                      src={blazer.image} 
+                      alt={blazer.title}
+                      className={`blazer-image ${imagesLoaded[blazer.id] ? 'loaded' : ''}`}
+                      loading="lazy"
+                      onLoad={() => handleImageLoad(blazer.id)}
+                    />
+                    <div className="blazer-overlay"></div>
+                  </div>
+                  <div className="flip-face back-face">
+                    <div className="back-face-gradient"></div>
+                    <div className="back-face-content">
+                      <h4 className="back-title">{blazer.title}</h4>
+                      <ul className="back-list">
+                        <li><strong>Fabric:</strong> {blazer.fabric}</li>
+                        <li><strong>Fit:</strong> {blazer.fit}</li>
+                        <li><strong>Style:</strong> {blazer.style}</li>
+                        {blazer.occasions && (
+                          <li><strong>Perfect For:</strong> {blazer.occasions}</li>
+                        )}
+                      </ul>
+                      <p className="back-description">{blazer.description}</p>
+                    </div>
+                  </div>
                 </div>
-                <img 
-                  src={blazer.image} 
-                  alt={blazer.title}
-                  className={`blazer-image ${imagesLoaded[blazer.id] ? 'loaded' : ''}`}
-                  loading="lazy"
-                  onLoad={() => handleImageLoad(blazer.id)}
-                />
-                <div className="blazer-overlay"></div>
               </div>
               <div className="blazer-info">
                 <h3 className="blazer-title">{blazer.title}</h3>
