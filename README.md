@@ -2,6 +2,25 @@
 
 A React application with a plain black background template.
 
+
+
+
+
+
+
+![Preview](https://github.com/user-attachments/assets/f91b4e57-51f4-450e-abd3-5fb608373658)
+
+
+
+
+
+
+
+
+
+
+
+
 ## Installation
 
 ```bash
@@ -26,12 +45,4 @@ npm run build
 npm run preview
 ```
 
-## Demo Video
-
-Check out the preview video to see a demonstration of the application in action.
-
-<video width="100%" controls>
-  <source src="Preview.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
 
