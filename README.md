@@ -28,5 +28,10 @@ npm run preview
 
 ## Demo Video
 
-Check out `Preview.mp4` to see a demonstration of the application in action.
+Check out the preview video to see a demonstration of the application in action.
+
+<video width="100%" controls>
+  <source src="Preview.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
