@@ -26,3 +26,7 @@ npm run build
 npm run preview
 ```
 
+## Demo Video
+
+Check out `Preview.mp4` to see a demonstration of the application in action.
+
